@@ -17,12 +17,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: 3.9
+        architecture: x64  # Ensure 64-bit Python
 
     - name: Install dependencies
       run: pip install pyinstaller psutil
 
     - name: Build EXE
-      run: pyinstaller --onefile --name NUKESDUMPER Data.py
+      run: pyinstaller --onefile --name NUKESDUMPER --target-arch amd64 Data.py  # Force 64-bit architecture
 
     - name: Upload EXE Artifact
       uses: actions/upload-artifact@v4
