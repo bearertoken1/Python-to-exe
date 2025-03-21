@@ -18,8 +18,8 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install PyInstaller
-      run: pip install pyinstaller
+    - name: Install dependencies
+      run: pip install pyinstaller psutil
 
     - name: Build EXE
       run: pyinstaller --onefile --name NUKESDUMPER Data.py
