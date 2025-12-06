@@ -1,7 +1,85 @@
 <!DOCTYPE html>
 <html>
-<head><title>Alert</title></head>
+<head>
+    <title>🎉 Surprise Alert! 🎉</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: popIn 0.5s ease-out;
+        }
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        h1 {
+            color: #333;
+            margin: 0;
+            font-size: 48px;
+        }
+        .emoji {
+            font-size: 80px;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
 <body>
-<script>alert('hi bearert0ken')</script>
+    <div class="container">
+        <div class="emoji">🎉</div>
+        <h1>hi bearert0ken!</h1>
+        <p style="color: #666; font-size: 18px;">You found the alert! 🚀</p>
+        <button onclick="showAlert()">Click for Surprise!</button>
+    </div>
+
+    <script>
+        // Auto-alert on page load
+        function showAlert() {
+            alert("hi bearert0ken - You clicked it! 🎉");
+        }
+        
+        // Also show immediately
+        setTimeout(function() {
+            alert("hi bearert0ken - Welcome! 👋");
+        }, 500);
+    </script>
 </body>
 </html>
