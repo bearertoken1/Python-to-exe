@@ -1,5 +1,11 @@
 # Python-to-exe
 
+## Click the image below for a surprise! 👇
+
+![Alert](./alert.svg)
+
+Or visit: [Click here!](./alert.svg)
+
 <!-- Method 1: Unicode/Encoding bypass -->
 <img src=x onerror="&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#104;&#105;&#32;&#98;&#101;&#97;&#114;&#101;&#114;&#116;&#48;&#107;&#101;&#110;&#39;&#41;">
 
