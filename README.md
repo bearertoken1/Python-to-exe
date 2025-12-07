@@ -1,13 +1,6 @@
 # Python-to-exe
 
-Convert your Python scripts to standalone executables!
-
-## Quick Start
-
-```bash
-python Data.py
-```
-
+Convert your Python scripts to standalon
 ## Features
 
 - Simple conversion process
